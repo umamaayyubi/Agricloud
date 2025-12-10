@@ -37,8 +37,11 @@ metadata:
   namespace: agricloud
 type: Opaque
 stringData:
-  DATABASE_URL: "postgresql://agricloud:agricloud123@postgres:5432/agricloud"
-  SECRET_KEY: "your-super-secret-key-change-this-in-production"
+  DATABASE_URL: "postgresql://agricloud_user:agricloud@12345@postgres:5432/agricloud_db"
+  SECRET_KEY: "9ff76571f10f54169cf8cd194b639917fa9a83d7f22902fac89a52b949f5fe96"
+  WEATHER_API_KEY: "1162b25b7432dda997586eb4643c0cbe"
+  ALGORITHM: "HS256"
+  ACCESS_TOKEN_EXPIRE_MINUTES: "1440"
 ---
 apiVersion: v1
 kind: Service

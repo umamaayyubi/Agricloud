@@ -4,8 +4,8 @@ metadata:
   name: postgres-config
   namespace: agricloud
 data:
-  POSTGRES_DB: agricloud
-  POSTGRES_USER: agricloud
+  POSTGRES_DB: agricloud_db
+  POSTGRES_USER: agricloud_user
 ---
 apiVersion: v1
 kind: Secret
@@ -14,7 +14,7 @@ metadata:
   namespace: agricloud
 type: Opaque
 stringData:
-  POSTGRES_PASSWORD: agricloud123
+  POSTGRES_PASSWORD: "agricloud@12345"
 ---
 apiVersion: apps/v1
 kind: Deployment
