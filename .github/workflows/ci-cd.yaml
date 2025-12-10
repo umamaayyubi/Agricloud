@@ -1,0 +1,100 @@
+name: AgriCloud CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  EC2_HOST: ${{ secrets.EC2_HOST }}
+  EC2_USER: ubuntu
+  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ env.DOCKER_PASSWORD }}
+
+      - name: Build and push backend image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./backend
+          push: true
+          tags: ${{ env.DOCKER_USERNAME }}/agricloud-backend:latest,${{ env.DOCKER_USERNAME }}/agricloud-backend:${{ github.sha }}
+          cache-from: type=registry,ref=${{ env.DOCKER_USERNAME }}/agricloud-backend:buildcache
+          cache-to: type=registry,ref=${{ env.DOCKER_USERNAME }}/agricloud-backend:buildcache,mode=max
+
+      - name: Build and push frontend image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{ env.DOCKER_USERNAME }}/agricloud-frontend:latest,${{ env.DOCKER_USERNAME }}/agricloud-frontend:${{ github.sha }}
+          cache-from: type=registry,ref=${{ env.DOCKER_USERNAME }}/agricloud-frontend:buildcache
+          cache-to: type=registry,ref=${{ env.DOCKER_USERNAME }}/agricloud-frontend:buildcache,mode=max
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to EC2 Kubernetes
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.EC2_HOST }}
+          username: ${{ env.EC2_USER }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/AgriCloud
+            
+            # Pull latest code
+            git pull origin main
+            
+            # Update Kubernetes deployments
+            kubectl set image deployment/backend backend=${{ env.DOCKER_USERNAME }}/agricloud-backend:${{ github.sha }} -n agricloud
+            kubectl set image deployment/frontend frontend=${{ env.DOCKER_USERNAME }}/agricloud-frontend:${{ github.sha }} -n agricloud
+            
+            # Wait for rollout
+            kubectl rollout status deployment/backend -n agricloud --timeout=300s
+            kubectl rollout status deployment/frontend -n agricloud --timeout=300s
+            
+            # Show status
+            echo "=== Deployment Status ==="
+            kubectl get pods -n agricloud
+            kubectl get svc -n agricloud
+            
+            # Get access URL
+            EC2_IP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
+            echo "🎉 AgriCloud deployed: http://$EC2_IP:30080"
+
+  notify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: Deployment notification
+        run: |
+          if [ "${{ needs.deploy.result }}" == "success" ]; then
+            echo "✅ Deployment successful!"
+          else
+            echo "❌ Deployment failed!"
+          fi

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: agricloud
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: umamaayyubi817/agricloud-backend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        envFrom:
+        - secretRef:
+            name: backend-secrets
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: backend-secrets
+  namespace: agricloud
+type: Opaque
+stringData:
+  DATABASE_URL: "postgresql://agricloud:agricloud123@postgres:5432/agricloud"
+  SECRET_KEY: "your-super-secret-key-change-this-in-production"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: agricloud
+spec:
+  selector:
+    app: backend
+  ports:
+  - port: 8000
+    targetPort: 8000
+  type: NodePort
