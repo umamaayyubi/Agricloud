@@ -1,0 +1,30 @@
+{
+  "app": {
+    "title": "ਐਗਰੀਕਲਾਊਡ ਲਾਈਟ"
+  },
+  "language": {
+    "label": "ਭਾਸ਼ਾ"
+  },
+  "login": {
+    "title": "ਵਾਪਸ ਸੁਆਗਤ ਹੈ",
+    "subtitle": "ਆਪਣੇ ਖੇਤ ਦਾ ਮੌਸਮ ਅਤੇ ਸਟੋਰੇਜ ਦੇਖਣ ਲਈ ਸਾਈਨ ਇਨ ਕਰੋ",
+    "username": "ਈਮੇਲ ਜਾਂ ਫ਼ੋਨ",
+    "password": "ਪਾਸਵਰਡ",
+    "button": "ਲੌਗਇਨ",
+    "error": "ਗਲਤ ਪ੍ਰਮਾਣ ਪੱਤਰ"
+  },
+  "main": {
+    "greeting": "ਸਤ ਸ੍ਰੀ ਅਕਾਲ ਕਿਸਾਨ",
+    "weatherTitle": "ਮੌਸਮ ਦੀ ਜਾਣਕਾਰੀ",
+    "storageTitle": "ਸਟੋਰੇਜ ਸਥਿਤੀ",
+    "logout": "ਲੌਗਆਉਟ",
+    "location": "ਸਥਾਨ",
+    "temperature": "ਤਾਪਮਾਨ",
+    "condition": "ਸਥਿਤੀ",
+    "noData": "ਕੋਈ ਡਾਟਾ ਉਪਲਬਧ ਨਹੀਂ",
+    "crop": "ਫਸਲ",
+    "quantity": "ਮਾਤਰਾ (ਟਨ)",
+    "storageLocation": "ਸਟੋਰੇਜ ਸਥਾਨ"
+  }
+}
+

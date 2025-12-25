@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agricloud-frontend
+  namespace: agricloud
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agricloud-frontend
+  template:
+    metadata:
+      labels:
+        app: agricloud-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: umamaayyubi817/agricloud-frontend:latest
+          ports:
+            - containerPort: 80
+

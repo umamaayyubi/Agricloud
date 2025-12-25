@@ -1,0 +1,30 @@
+{
+  "app": {
+    "title": "એગ્રીક્લાઉડ લાઇટ"
+  },
+  "language": {
+    "label": "ભાષા"
+  },
+  "login": {
+    "title": "પાછા સ્વાગત છે",
+    "subtitle": "તમારા ખેતરનું હવામાન અને સ્ટોરેજ જોવા માટે સાઇન ઇન કરો",
+    "username": "ઇમેઇલ અથવા ફોન",
+    "password": "પાસવર્ડ",
+    "button": "લોગિન",
+    "error": "અમાન્ય ઓળખપત્રો"
+  },
+  "main": {
+    "greeting": "નમસ્તે ખેડૂત",
+    "weatherTitle": "હવામાન વિહંગાવલોકન",
+    "storageTitle": "સંગ્રહ સ્થિતિ",
+    "logout": "લોગઆઉટ",
+    "location": "સ્થાન",
+    "temperature": "તાપમાન",
+    "condition": "સ્થિતિ",
+    "noData": "ડેટા ઉપલબ્ધ નથી",
+    "crop": "પાક",
+    "quantity": "જથ્થો (ટન)",
+    "storageLocation": "સંગ્રહ સ્થાન"
+  }
+}
+

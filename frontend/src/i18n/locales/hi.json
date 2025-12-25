@@ -1,0 +1,29 @@
+{
+  "app": {
+    "title": "एग्रीक्लाउड लाइट"
+  },
+  "language": {
+    "label": "भाषा"
+  },
+  "login": {
+    "title": "वापसी पर स्वागत है",
+    "subtitle": "अपने खेत का मौसम और भंडारण देखने के लिए साइन इन करें",
+    "username": "ईमेल या फोन",
+    "password": "पासवर्ड",
+    "button": "लॉगिन",
+    "error": "अमान्य क्रेडेंशियल"
+  },
+  "main": {
+    "greeting": "नमस्कार किसान",
+    "weatherTitle": "मौसम का विवरण",
+    "storageTitle": "भंडारण स्थिति",
+    "logout": "लॉगआउट",
+    "location": "स्थान",
+    "temperature": "तापमान",
+    "condition": "स्थिति",
+    "noData": "कोई डेटा उपलब्ध नहीं",
+    "crop": "फसल",
+    "quantity": "मात्रा (टन)",
+    "storageLocation": "भंडारण स्थान"
+  }
+}

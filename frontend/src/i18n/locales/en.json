@@ -1,0 +1,30 @@
+{
+  "app": {
+    "title": "AgriCloud Lite"
+  },
+  "language": {
+    "label": "Language"
+  },
+  "login": {
+    "title": "Welcome Back",
+    "subtitle": "Sign in to view your farm weather and storage",
+    "username": "Email or Phone",
+    "password": "Password",
+    "button": "Login",
+    "error": "Invalid credentials"
+  },
+  "main": {
+    "greeting": "Hello, Farmer",
+    "weatherTitle": "Weather Overview",
+    "storageTitle": "Storage Status",
+    "logout": "Logout",
+    "location": "Location",
+    "temperature": "Temperature",
+    "condition": "Condition",
+    "noData": "No data available",
+    "crop": "Crop",
+    "quantity": "Quantity (tons)",
+    "storageLocation": "Storage Location"
+  }
+}
+

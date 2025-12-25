@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agricloud-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agricloud-backend
+  template:
+    metadata:
+      labels:
+        app: agricloud-backend
+    spec:
+      containers:
+        - name: backend
+          image: umamaayyubi817/agricloud-backend:latest
+          ports:
+            - containerPort: 4000
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: AWS_REGION
+              value: "us-east-1"
+            - name: STORAGE_TABLE
+              value: "AgriCloud_storage"
+            - name: WEATHER_TABLE
+              value: "AgriCloud_weather"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+

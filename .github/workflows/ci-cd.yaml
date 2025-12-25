@@ -1,0 +1,54 @@
+name: CI-CD
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build frontend image
+        run: |
+          docker build -f Dockerfile.frontend -t umamaayyubi817/agricloud-frontend:latest .
+
+      - name: Push frontend image
+        run: |
+          docker push umamaayyubi817/agricloud-frontend:latest
+
+      - name: Build backend image
+        run: |
+          docker build -f Dockerfile.backend -t umamaayyubi817/agricloud-backend:latest .
+
+      - name: Push backend image
+        run: |
+          docker push umamaayyubi817/agricloud-backend:latest
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to EC2 Kubernetes
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/AgriCloud
+            git pull
+            kubectl apply -f k8s/namespace.yaml
+            kubectl apply -f k8s/
+            kubectl rollout restart deployment/agricloud-backend -n agricloud
+            kubectl rollout restart deployment/agricloud-frontend -n agricloud
+
