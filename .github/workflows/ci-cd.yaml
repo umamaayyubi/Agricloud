@@ -19,7 +19,7 @@ jobs:
       # 🌐 FRONTEND BUILD
       - name: Build frontend image
         run: |
-          docker build -f frontend/Dockerfile -t umamaayyubi817/agricloud-frontend:latest ./frontend
+          docker build -t umamaayyubi817/agricloud-frontend:latest ./frontend
 
       - name: Push frontend image
         run: |
@@ -28,7 +28,7 @@ jobs:
       # 🔥 BACKEND BUILD
       - name: Build backend image
         run: |
-          docker build -f backend/Dockerfile -t umamaayyubi817/agricloud-backend:latest ./backend
+          docker build -t umamaayyubi817/agricloud-backend:latest ./backend
 
       - name: Push backend image
         run: |
